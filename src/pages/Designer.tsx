@@ -15,12 +15,17 @@ import "@xyflow/react/dist/style.css";
 import { Navigation } from "@/components/Navigation";
 import { AIPromptPanel } from "@/components/AIPromptPanel";
 import { TableBlock } from "@/components/TableBlock";
+import { RelationshipEdge, RelationshipType } from "@/components/RelationshipEdge";
 import { Button } from "@/components/ui/button";
 import { Plus, RefreshCw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const nodeTypes = {
   table: TableBlock,
+};
+
+const edgeTypes = {
+  relationship: RelationshipEdge,
 };
 
 const initialNodes: Node[] = [
@@ -62,8 +67,11 @@ const initialEdges: Edge[] = [
     target: "2",
     sourceHandle: "right",
     targetHandle: "left",
-    type: "smoothstep",
-    style: { stroke: "#4f46e5", strokeWidth: 2 },
+    type: "relationship",
+    data: {
+      relationshipType: "1:N" as RelationshipType,
+      label: "has many",
+    },
   },
 ];
 
@@ -73,7 +81,17 @@ export default function Designer() {
   const { toast } = useToast();
 
   const onConnect = useCallback(
-    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    (params: Connection) => {
+      const newEdge = {
+        ...params,
+        type: "relationship",
+        data: {
+          relationshipType: "1:N" as RelationshipType,
+          label: "relates to",
+        },
+      };
+      setEdges((eds) => addEdge(newEdge, eds));
+    },
     [setEdges]
   );
 
@@ -151,6 +169,7 @@ export default function Designer() {
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             nodeTypes={nodeTypes}
+            edgeTypes={edgeTypes}
             fitView
             className="bg-background"
           >

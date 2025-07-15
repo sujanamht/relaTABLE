@@ -81,3 +81,90 @@ All colors MUST be HSL.
     box-shadow: var(--shadow-lg);
   }
 }
+
+/* React Flow Custom Styles */
+.react-flow {
+  background: hsl(var(--background));
+}
+
+.react-flow__node {
+  font-family: inherit;
+}
+
+.react-flow__node:hover .react-flow__handle {
+  opacity: 1 !important;
+}
+
+.react-flow__handle {
+  border: 2px solid hsl(var(--primary));
+  background: hsl(var(--background));
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.react-flow__handle:hover {
+  background: hsl(var(--primary)) !important;
+  border-color: hsl(var(--background)) !important;
+}
+
+.react-flow__handle.connecting {
+  opacity: 1;
+  background: hsl(var(--primary));
+}
+
+.react-flow__handle.valid {
+  background: hsl(var(--primary));
+}
+
+.react-flow__edge-path {
+  stroke: hsl(var(--primary));
+  stroke-width: 2;
+}
+
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: hsl(var(--primary));
+  stroke-width: 3;
+}
+
+.react-flow__controls {
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+
+.react-flow__controls button {
+  background: hsl(var(--background));
+  border: none;
+  border-bottom: 1px solid hsl(var(--border));
+  color: hsl(var(--foreground));
+  transition: all 0.2s ease;
+}
+
+.react-flow__controls button:hover {
+  background: hsl(var(--secondary));
+}
+
+.react-flow__minimap {
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+
+.react-flow__node-resizer {
+  border: 1px solid hsl(var(--primary));
+}
+
+.react-flow__node-resizer .react-flow__resize-control {
+  background: hsl(var(--primary));
+  border: 2px solid hsl(var(--background));
+  border-radius: 2px;
+}
+
+.react-flow__node-resizer .react-flow__resize-control:hover {
+  background: hsl(var(--primary) / 0.8);
+}

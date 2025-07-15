@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Handle, Position } from "@xyflow/react";
+import { Handle, Position, NodeResizer } from "@xyflow/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, Key, Link } from "lucide-react";
@@ -17,35 +17,50 @@ interface TableBlockProps {
     tableName: string;
     columns: Column[];
   };
+  selected?: boolean;
 }
 
-export const TableBlock = memo(({ data }: TableBlockProps) => {
+export const TableBlock = memo(({ data, selected }: TableBlockProps) => {
   const { tableName, columns } = data;
 
   return (
-    <div className="min-w-[200px]">
+    <div className="min-w-[200px] relative">
+      {selected && (
+        <NodeResizer
+          minWidth={200}
+          minHeight={100}
+          handleClassName="w-2 h-2 bg-primary border-2 border-background rounded-sm hover:bg-primary/80 transition-colors"
+          lineClassName="border-primary"
+        />
+      )}
+      
+      {/* Connection Handles */}
       <Handle
         type="target"
         position={Position.Top}
-        className="h-2 w-2 bg-primary border-2 border-primary-foreground"
+        className="h-3 w-3 bg-background border-2 border-primary rounded-full hover:bg-primary hover:border-background transition-colors opacity-0 hover:opacity-100"
+        style={{ top: -6 }}
       />
       <Handle
         type="source"
         position={Position.Bottom}
-        className="h-2 w-2 bg-primary border-2 border-primary-foreground"
+        className="h-3 w-3 bg-background border-2 border-primary rounded-full hover:bg-primary hover:border-background transition-colors opacity-0 hover:opacity-100"
+        style={{ bottom: -6 }}
       />
       <Handle
         type="target"
         position={Position.Left}
-        className="h-2 w-2 bg-primary border-2 border-primary-foreground"
+        className="h-3 w-3 bg-background border-2 border-primary rounded-full hover:bg-primary hover:border-background transition-colors opacity-0 hover:opacity-100"
+        style={{ left: -6 }}
       />
       <Handle
         type="source"
         position={Position.Right}
-        className="h-2 w-2 bg-primary border-2 border-primary-foreground"
+        className="h-3 w-3 bg-background border-2 border-primary rounded-full hover:bg-primary hover:border-background transition-colors opacity-0 hover:opacity-100"
+        style={{ right: -6 }}
       />
       
-      <Card className="shadow-soft border-2 border-border hover:border-primary/50 transition-colors">
+      <Card className="shadow-soft border-2 border-border hover:border-primary/50 transition-colors bg-background">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-sm">
             <Table className="h-4 w-4" />
