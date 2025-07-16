@@ -1,19 +1,37 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Database, Settings, Download, Pencil } from "lucide-react";
+import { Settings, Download, Pencil, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export function Navigation() {
   const location = useLocation();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Prevent hydration issues
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const isActive = (path: string) => location.pathname === path;
 
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+
   return (
     <nav className="border-b border-border bg-background shadow-soft-sm">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
-        <div className="flex items-center space-x-2">
-          <Database className="h-6 w-6 text-primary" />
-          <span className="text-xl font-semibold text-foreground">DBDesigner</span>
-        </div>
+      <div className="mx-auto flex h-16  items-center justify-between px-4">
+        {/* Logo and Brand - Clickable to redirect to landing page */}
+        <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+          <img 
+            src="/logo.png" 
+            alt="relaTABLE Logo" 
+            className="h-12 w-auto object-contain"
+          />
+          <span className="text-2xl font-semibold text-gray-400">rela<span className="text-gray-300 font-bold">TABLE</span></span>
+        </Link>
 
         <div className="flex items-center space-x-1">
           <Button
@@ -48,6 +66,23 @@ export function Navigation() {
               Settings
             </Link>
           </Button>
+
+          {/* Theme Toggle Button */}
+          {mounted && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleTheme}
+              className="rounded-full h-9 w-9"
+              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            >
+              {theme === "dark" ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Moon className="h-4 w-4" />
+              )}
+            </Button>
+          )}
         </div>
       </div>
     </nav>

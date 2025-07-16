@@ -173,10 +173,14 @@ export default function Designer() {
             fitView
             className="bg-background"
           >
-            <Background color="#e5e7eb" gap={20} />
+            <Background 
+              color="hsl(var(--border))" 
+              gap={20} 
+              variant="dots"
+            />
             <Controls />
             <MiniMap 
-              nodeColor="#4f46e5"
+              nodeColor="hsl(var(--primary))"
               className="bg-background border border-border rounded-lg"
             />
           </ReactFlow>
